@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct CategoryResponse: Decodable {
+    let trivia_categories: [Category]
+}
+
 struct Category: Identifiable, Decodable {
     var id: Int
     var name: String

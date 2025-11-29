@@ -20,9 +20,9 @@ struct CategoryService {
         request.httpMethod = "GET"
         
         let (data, _) = try await URLSession.shared.data(for: request)
-        let categoriesObjects = try JSONDecoder().decode([Category].self, from: data)
+        let categoriesObjects = try JSONDecoder().decode(CategoryResponse.self, from: data)
         
-        return .success(categoriesObjects)
+        return .success(categoriesObjects.trivia_categories)
     }
 }
 
