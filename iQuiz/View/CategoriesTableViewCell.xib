@@ -46,8 +46,8 @@
                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </buttonConfiguration>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GvT-26-thB">
-                        <rect key="frame" x="20" y="20" width="124" height="62"/>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GvT-26-thB">
+                        <rect key="frame" x="20" y="20" width="133.66666666666666" height="62"/>
                         <color key="backgroundColor" systemColor="systemFillColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="62" id="OaO-hk-wgC"/>
@@ -66,6 +66,7 @@
                     <constraint firstItem="fac-qx-5oi" firstAttribute="top" secondItem="Y45-nu-HdN" secondAttribute="top" constant="20" id="6Kb-W9-9ow"/>
                     <constraint firstAttribute="bottom" secondItem="GvT-26-thB" secondAttribute="bottom" id="8Xp-Bc-Lwo"/>
                     <constraint firstAttribute="bottom" secondItem="Rmz-QM-ilU" secondAttribute="bottom" constant="20" id="8qx-Z2-QvA"/>
+                    <constraint firstItem="fac-qx-5oi" firstAttribute="leading" secondItem="GvT-26-thB" secondAttribute="trailing" constant="10" id="QlU-77-2fk"/>
                     <constraint firstItem="Rmz-QM-ilU" firstAttribute="top" secondItem="Y45-nu-HdN" secondAttribute="top" constant="20" id="Soa-aM-2fk"/>
                     <constraint firstAttribute="bottom" secondItem="f7f-vM-ow4" secondAttribute="bottom" constant="20" id="VSq-Bo-60P"/>
                     <constraint firstItem="GvT-26-thB" firstAttribute="leading" secondItem="Y45-nu-HdN" secondAttribute="leading" constant="20" id="dgL-9H-Gnu"/>
