@@ -15,10 +15,12 @@ class QuestionViewController: UIViewController {
     @IBOutlet var buttons: [UIButton]!
     @IBOutlet weak var titleQuestionLabel: UILabel!
     
+    private let viewModel = QuestionViewModel()
+    
     @IBAction func buttonPressed(_ sender: UIButton) {
         validateAnswer(sender)
         
-        if numberQuestion < questions.count - 1 {
+        if numberQuestion < viewModel.questions.count - 1 {
             numberQuestion += 1
             //Utilizado pra add intervalo de algo #selector é pra colocar a funcao que vai ser executada apos o intervalo
             Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(configQuestion), userInfo: nil, repeats: false)
@@ -30,8 +32,22 @@ class QuestionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configLayout()
-        configQuestion()
+        configViewModel()
+        viewModel.loadQuestions()
         // Do any additional setup after loading the view.
+    }
+    
+    func configViewModel() {
+        // Garante que a atualização da UI ocorra na thread principal
+        viewModel.onUpdate = { [weak self] in
+            // [weak self] para evitar retenção de ciclo
+            guard let self = self else { return }
+            
+            // Verifica se há questões antes de tentar configurar a tela
+            if self.viewModel.questions.isEmpty == false {
+                self.configQuestion()
+            }
+        }
     }
     
     
@@ -46,9 +62,9 @@ class QuestionViewController: UIViewController {
     
     //objsc usado pos causa do selector
     @objc func configQuestion() {
-        titleQuestionLabel.text = questions[numberQuestion].title
+        titleQuestionLabel.text = viewModel.questions[numberQuestion].title
         for button in buttons {
-            let titleButton = questions[numberQuestion].answers[button.tag]
+            let titleButton = viewModel.questions[numberQuestion].allAnswers[button.tag]
             button.setTitle(titleButton, for: .normal)
             button.backgroundColor = UIColor.customColor
         }
@@ -65,7 +81,7 @@ class QuestionViewController: UIViewController {
     }
     
     func validateAnswer(_ sender: UIButton) {
-        let correct = questions[numberQuestion].correctAnswer == sender.tag
+        let correct = viewModel.questions[numberQuestion].correctAnswer == sender.titleLabel?.text
         if(correct) {
             ponts += 1
             sender.backgroundColor = UIColor.greenBackground

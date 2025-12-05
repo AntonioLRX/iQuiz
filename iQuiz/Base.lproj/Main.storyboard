@@ -101,6 +101,9 @@
                                         <buttonConfiguration key="configuration" style="plain" title="Avançar">
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <segue destination="hjh-Lt-8ad" kind="show" id="9Pf-rS-CEE"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -141,18 +144,18 @@
             <objects>
                 <viewController id="hjh-Lt-8ad" customClass="QuestionViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Cq-5T-2Oe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="752"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Título da Questao" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acs-sR-dtD">
-                                <rect key="frame" x="64" y="212" width="247" height="39"/>
+                                <rect key="frame" x="64" y="162" width="247" height="39"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXv-kT-ZQv">
-                                <rect key="frame" x="64" y="323" width="247" height="62"/>
+                                <rect key="frame" x="64" y="273" width="247" height="62"/>
                                 <color key="backgroundColor" red="0.45490196078431372" green="0.19607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="62" id="qMc-RT-MmU"/>
@@ -167,7 +170,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAV-je-cMe">
-                                <rect key="frame" x="64" y="511" width="247" height="62"/>
+                                <rect key="frame" x="64" y="461" width="247" height="62"/>
                                 <color key="backgroundColor" red="0.4549019608" green="0.1960784314" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="62" id="QSQ-y6-eTd"/>
@@ -182,7 +185,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H6t-Ov-jO0">
-                                <rect key="frame" x="64" y="417" width="247" height="62"/>
+                                <rect key="frame" x="64" y="367" width="247" height="62"/>
                                 <color key="backgroundColor" red="0.4549019608" green="0.1960784314" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="62" id="7U1-dd-3KY"/>
@@ -196,6 +199,21 @@
                                     <action selector="buttonPressed:" destination="hjh-Lt-8ad" eventType="touchUpInside" id="ic4-Un-nMN"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="71m-On-ihi">
+                                <rect key="frame" x="64" y="555" width="247" height="62"/>
+                                <color key="backgroundColor" red="0.4549019608" green="0.1960784314" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="62" id="qid-Qm-NvG"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Resposta 04">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="22"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="buttonPressed:" destination="hjh-Lt-8ad" eventType="touchUpInside" id="IwI-fh-hMb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aaC-vd-lVh"/>
                         <color key="backgroundColor" red="0.32156862745098036" green="0.11764705882352941" blue="0.76078431372549016" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -203,12 +221,15 @@
                             <constraint firstItem="H6t-Ov-jO0" firstAttribute="top" secondItem="hXv-kT-ZQv" secondAttribute="bottom" constant="32" id="0L0-1r-WnC"/>
                             <constraint firstItem="aaC-vd-lVh" firstAttribute="trailing" secondItem="H6t-Ov-jO0" secondAttribute="trailing" constant="64" id="5xE-UV-f6T"/>
                             <constraint firstItem="aaC-vd-lVh" firstAttribute="trailing" secondItem="hXv-kT-ZQv" secondAttribute="trailing" constant="64" id="8fQ-s3-fD6"/>
+                            <constraint firstItem="aaC-vd-lVh" firstAttribute="trailing" secondItem="71m-On-ihi" secondAttribute="trailing" constant="64" id="AbV-Id-kXy"/>
                             <constraint firstItem="acs-sR-dtD" firstAttribute="leading" secondItem="aaC-vd-lVh" secondAttribute="leading" constant="64" id="E6K-dG-agI"/>
                             <constraint firstItem="aaC-vd-lVh" firstAttribute="trailing" secondItem="dAV-je-cMe" secondAttribute="trailing" constant="64" id="MHY-wX-gZK"/>
                             <constraint firstItem="dAV-je-cMe" firstAttribute="leading" secondItem="aaC-vd-lVh" secondAttribute="leading" constant="64" id="OVM-7U-j2W"/>
                             <constraint firstItem="H6t-Ov-jO0" firstAttribute="leading" secondItem="aaC-vd-lVh" secondAttribute="leading" constant="64" id="SQT-JG-wgf"/>
                             <constraint firstItem="dAV-je-cMe" firstAttribute="top" secondItem="H6t-Ov-jO0" secondAttribute="bottom" constant="32" id="bTL-bg-I5Q"/>
                             <constraint firstItem="acs-sR-dtD" firstAttribute="top" secondItem="aaC-vd-lVh" secondAttribute="top" constant="112" id="e0Y-wN-xav"/>
+                            <constraint firstItem="71m-On-ihi" firstAttribute="top" secondItem="dAV-je-cMe" secondAttribute="bottom" constant="32" id="hnt-bg-wcl"/>
+                            <constraint firstItem="71m-On-ihi" firstAttribute="leading" secondItem="aaC-vd-lVh" secondAttribute="leading" constant="64" id="mV4-iN-HZv"/>
                             <constraint firstItem="hXv-kT-ZQv" firstAttribute="leading" secondItem="aaC-vd-lVh" secondAttribute="leading" constant="64" id="mo0-hw-qYr"/>
                             <constraint firstItem="hXv-kT-ZQv" firstAttribute="top" secondItem="acs-sR-dtD" secondAttribute="bottom" constant="72" id="pUW-Ib-cXG"/>
                             <constraint firstItem="aaC-vd-lVh" firstAttribute="trailing" secondItem="acs-sR-dtD" secondAttribute="trailing" constant="64" id="vdQ-qq-fjV"/>
@@ -220,6 +241,7 @@
                         <outletCollection property="buttons" destination="hXv-kT-ZQv" collectionClass="NSMutableArray" id="cXg-W2-kxT"/>
                         <outletCollection property="buttons" destination="H6t-Ov-jO0" collectionClass="NSMutableArray" id="yp4-FC-t4D"/>
                         <outletCollection property="buttons" destination="dAV-je-cMe" collectionClass="NSMutableArray" id="Yd7-0U-XgO"/>
+                        <outletCollection property="buttons" destination="71m-On-ihi" collectionClass="NSMutableArray" id="tB5-PC-14e"/>
                         <segue destination="c6Y-lq-vH3" kind="show" identifier="goToPerformanceScreen" id="SFf-oO-naw"/>
                     </connections>
                 </viewController>
@@ -318,6 +340,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="SFf-oO-naw"/>
         <segue reference="i6z-d1-ovk"/>
     </inferredMetricsTieBreakers>
     <resources>
