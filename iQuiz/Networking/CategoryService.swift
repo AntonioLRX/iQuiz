@@ -7,11 +7,6 @@
 
 import Foundation
 
-enum RequestError: Error {
-    case invalidURL
-    case errorRequest(error: String)
-}
-
 struct CategoryService {
     func fetchData() async throws -> Result<[Category], RequestError> {
         guard let url = URL(string: "https://opentdb.com/api_category.php") else { return .failure(.invalidURL) }
@@ -23,6 +18,11 @@ struct CategoryService {
         let categoriesObjects = try JSONDecoder().decode(CategoryResponse.self, from: data)
         
         return .success(categoriesObjects.trivia_categories)
+    }
+    
+    
+    func fetchDataMock() async throws -> Result<[Category], RequestError> {
+        return .success(categoriesMock)
     }
 }
 
