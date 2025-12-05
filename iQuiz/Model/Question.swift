@@ -40,8 +40,6 @@ struct Question: Decodable {
     
     var allAnswers: [String] {
         let combinedAnswers = incorrectAnswers + [correctAnswer]
-        let uniqueAnswersSet = Set(combinedAnswers)
-        print("Combined Answers antes do Set: \(combinedAnswers)")
-        return Array(uniqueAnswersSet).shuffled()
+        return combinedAnswers.sorted()
     }
 }
