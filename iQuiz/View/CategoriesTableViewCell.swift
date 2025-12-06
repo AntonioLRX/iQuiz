@@ -13,7 +13,5 @@ class CategoriesTableViewCell: UITableViewCell {
     
     func configCategory(category: Category) {
         categoryButton.setTitle(category.name, for: .normal)
-        
-        //Todo implement difficult Item
     }
 }

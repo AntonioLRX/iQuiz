@@ -13,12 +13,14 @@ class CategoryViewController: UIViewController {
     
 
     @IBOutlet weak var categoriesTableView: UITableView!
+    @IBOutlet weak var contentButtonView: UIView!
     
     private let viewModel = CategoryViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configTableView()
+        configLayout()
         bindViewModel()
         viewModel.loadCategories()
     }
@@ -40,6 +42,12 @@ class CategoryViewController: UIViewController {
         categoriesTableView.separatorInset = .zero
         categoriesTableView.layoutMargins = .zero
         categoriesTableView.sectionHeaderTopPadding = 0
+    }
+    
+    func configLayout() {
+        contentButtonView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        contentButtonView.layer.cornerRadius = 24
+        contentButtonView.layoutMargins = .zero
     }
 }
 
