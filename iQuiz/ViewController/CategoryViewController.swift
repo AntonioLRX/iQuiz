@@ -15,6 +15,15 @@ class CategoryViewController: UIViewController {
     @IBOutlet weak var categoriesTableView: UITableView!
     @IBOutlet weak var contentButtonView: UIView!
     
+    @IBAction func advanceButton(_ sender: UIButton) {
+        guard let categoryCell = categoriesTableView.dequeueReusableCell(withIdentifier: IDENTIFIER) as? CategoriesTableViewCell else {
+            fatalError("Error to create table view cell")
+        }
+        
+        if(categoryCell.buttonSenderSelected != nil) {
+            navigateToQuestionScreen(sender)
+        }
+    }
     private let viewModel = CategoryViewModel()
     
     override func viewDidLoad() {
@@ -48,6 +57,10 @@ class CategoryViewController: UIViewController {
         contentButtonView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         contentButtonView.layer.cornerRadius = 24
         contentButtonView.layoutMargins = .zero
+    }
+    
+    func navigateToQuestionScreen(_ sender: UIButton) {
+        print("Navegar para a pergunta")
     }
 }
 
