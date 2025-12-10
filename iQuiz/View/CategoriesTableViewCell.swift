@@ -10,13 +10,14 @@ import UIKit
 class CategoriesTableViewCell: UITableViewCell {
     
     @IBOutlet weak var categoryButton: UIButton!
-    var categorySelected: String = ""
-    var buttonSenderSelected: UIButton? = nil
+    var categorySelected: Int = 0
+    var onButtonPressed: (Int) -> Void = {_ in }
     
     @IBAction func onButtonPressed(_ sender: UIButton) {
-        categorySelected = sender.titleLabel?.text ?? ""
+        onButtonPressed(sender.tag)
     }
     func configCategory(category: Category) {
         categoryButton.setTitle(category.name, for: .normal)
+        categoryButton.tag = category.id
     }
 }

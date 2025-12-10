@@ -9,18 +9,22 @@ import UIKit
 
 class QuestionViewController: UIViewController {
     
+    private var questions: [Question] = []
     var ponts: Int = 0
     var numberQuestion: Int = 0
+    var categoryId: Int = 0
+    var difficult: DifficultEnum = .EASY
     
     @IBOutlet var buttons: [UIButton]!
     @IBOutlet weak var titleQuestionLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private let viewModel = QuestionViewModel()
     
     @IBAction func buttonPressed(_ sender: UIButton) {
         validateAnswer(sender)
         
-        if numberQuestion < viewModel.questions.count - 1 {
+        if numberQuestion < questions.count - 1 {
             numberQuestion += 1
             //Utilizado pra add intervalo de algo #selector é pra colocar a funcao que vai ser executada apos o intervalo
             Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(configQuestion), userInfo: nil, repeats: false)
@@ -28,25 +32,67 @@ class QuestionViewController: UIViewController {
             navigateToPerformanceScreen()
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configLayout()
         configViewModel()
-        viewModel.loadQuestions()
+        viewModel.loadQuestions(
+            categoryId: categoryId, difficult: difficult
+        )
         // Do any additional setup after loading the view.
     }
     
+    private func getCurrentQuestion() -> Question? {
+        guard numberQuestion < questions.count else { return nil }
+        return questions[numberQuestion]
+    }
+    
     func configViewModel() {
-        // Garante que a atualização da UI ocorra na thread principal
+        // 1. O Callback (Listener) que é chamado quando o estado muda
         viewModel.onUpdate = { [weak self] in
-            // [weak self] para evitar retenção de ciclo
-            guard let self = self else { return }
+            self?.render() // Chama a função que reage à mudança de estado
+        }
+    }
+    
+    // Essa função será a responsável por atualizar toda a UI com base no estado.
+    func render() {
+        // **A - Primeiro, esconde todos os elementos de estado (como um "reset")**
+        self.activityIndicator.stopAnimating()
+        //self.errorLabel.isHidden = true
+        self.titleQuestionLabel.isHidden = true
+        self.buttons.forEach { $0.isHidden = true }
+        
+        // **B - Reage ao estado atual**
+        switch viewModel.state {
             
-            // Verifica se há questões antes de tentar configurar a tela
-            if self.viewModel.questions.isEmpty == false {
+        case .initial:
+            // Acontece antes de carregar
+            break
+            
+        case .loading:
+            // Mostra o spinner
+            self.activityIndicator.startAnimating()
+            
+        case .success(let questions):
+            self.questions = questions
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.hidesWhenStopped = true
+            if questions.isEmpty {
+                // Se a lista veio vazia (erro na API, mas sem throw)
+                //self.errorLabel.text = "Nenhuma pergunta encontrada para esta categoria."
+                //self.errorLabel.isHidden = false
+            } else {
+                self.titleQuestionLabel.isHidden = false
+                self.buttons.forEach { $0.isHidden = false }
                 self.configQuestion()
             }
+            
+        case .error(let message):
+            print(message)
+            // Ocorreu um erro
+            //self.errorLabel.text = message
+            //self.errorLabel.isHidden = false
         }
     }
     
@@ -62,9 +108,9 @@ class QuestionViewController: UIViewController {
     
     //objsc usado pos causa do selector
     @objc func configQuestion() {
-        titleQuestionLabel.text = viewModel.questions[numberQuestion].title
+        titleQuestionLabel.text = questions[numberQuestion].title
         for button in buttons {
-            let titleButton = viewModel.questions[numberQuestion].allAnswers[button.tag]
+            let titleButton = questions[numberQuestion].allAnswers[button.tag]
             button.setTitle(titleButton, for: .normal)
             button.backgroundColor = UIColor.customColor
         }
@@ -81,7 +127,7 @@ class QuestionViewController: UIViewController {
     }
     
     func validateAnswer(_ sender: UIButton) {
-        let correct = viewModel.questions[numberQuestion].correctAnswer == sender.titleLabel?.text
+        let correct = questions[numberQuestion].correctAnswer == sender.titleLabel?.text
         if(correct) {
             ponts += 1
             sender.backgroundColor = UIColor.greenBackground
@@ -90,13 +136,13 @@ class QuestionViewController: UIViewController {
         }
     }
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

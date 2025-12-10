@@ -15,6 +15,7 @@ class PerformanceViewController: UIViewController {
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var buttonReset: UIButton!
     
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

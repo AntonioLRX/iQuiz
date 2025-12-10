@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum QuestionState {
+    case loading        // A requisição está em andamento (mostra o spinner)
+    case success([Question]) // Dados carregados com sucesso
+    case error(String)  // Ocorreu um erro (mostra a mensagem de erro)
+    case initial        // (Opcional) Estado inicial antes da primeira carga
+}
+
 class QuestionViewModel {
     
     private let questionService = QuestionService()
@@ -14,22 +21,26 @@ class QuestionViewModel {
     @MainActor
     var onUpdate: (() -> Void)?
     
-    private(set) var questions: [Question] = [] {
+    private(set) var state: QuestionState = .initial {
         didSet {
             onUpdate?()
         }
     }
     
-    func loadQuestions() {
+    func loadQuestions(
+        categoryId: Int = 9,
+        difficult: DifficultEnum = .EASY
+    ) {
+        self.state = .loading
         Task {
             do {
                 let result = try await questionService.getQuestions(
-                    categoryId: 9,
-                    difficult: DifficultEnum.EASY
+                    categoryId: categoryId,
+                    difficult: difficult
                 )
                 switch result {
                 case .success(let list):
-                    self.questions = list
+                    self.state = .success(list)
                 case .failure(let error):
                     print("Erro ao carregar categorias: \(error)")
                 }

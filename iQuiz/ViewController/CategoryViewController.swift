@@ -14,17 +14,11 @@ class CategoryViewController: UIViewController {
 
     @IBOutlet weak var categoriesTableView: UITableView!
     @IBOutlet weak var contentButtonView: UIView!
+    private let viewModel = CategoryViewModel()
     
     @IBAction func advanceButton(_ sender: UIButton) {
-        guard let categoryCell = categoriesTableView.dequeueReusableCell(withIdentifier: IDENTIFIER) as? CategoriesTableViewCell else {
-            fatalError("Error to create table view cell")
-        }
-        
-        if(categoryCell.buttonSenderSelected != nil) {
-            navigateToQuestionScreen(sender)
-        }
+        navigateToQuestionScreen(sender)
     }
-    private let viewModel = CategoryViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +53,14 @@ class CategoryViewController: UIViewController {
         contentButtonView.layoutMargins = .zero
     }
     
-    func navigateToQuestionScreen(_ sender: UIButton) {
-        print("Navegar para a pergunta")
+    func navigateToQuestionScreen(_ sender: Any) {
+        performSegue(withIdentifier: "goToQuestionScreen", sender: sender)
+    }
+    
+    //segue é uma transicao entre telas
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let questionVC = segue.destination as? QuestionViewController else { return }
+        questionVC.categoryId = viewModel.categorySelected
     }
 }
 
@@ -77,6 +77,10 @@ extension CategoryViewController: UITableViewDataSource {
         
         let category = viewModel.categories[indexPath.row]
         categoryCell.configCategory(category: category)
+        
+        categoryCell.onButtonPressed = { [weak self] category in
+                self?.viewModel.categorySelected = category
+            }
     
         return categoryCell
     }

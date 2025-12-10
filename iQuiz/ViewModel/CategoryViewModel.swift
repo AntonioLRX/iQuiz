@@ -10,6 +10,7 @@ import Foundation
 class CategoryViewModel {
     
     private let service = CategoryService()
+    var categorySelected: Int = 0
     
     @MainActor
     var onUpdate: (() -> Void)?
@@ -34,5 +35,9 @@ class CategoryViewModel {
                 print("Erro inesperado: \(error)")
             }
         }
+    }
+    
+    func setCategorySelected(_ category: Int) {
+        self.categorySelected = category
     }
 }
